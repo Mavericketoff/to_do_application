@@ -41,11 +41,10 @@
 Есть собранный apk, именно релизная сборка. Найти готовый apk для установки можно по пути `/Users/mavericketoff/Documents/GitHub/to_do_application/build/app/outputs/flutter-apk/app-release.apk`. Или скачать по ссылке - [`тык`](https://drive.google.com/file/d/11cbF6if4kgXhypLeux4g3RCLzayoY0KI/view?usp=sharing)
 
 ## Скриншоты
-
-![Основной экран со слайдом Done](https://drive.google.com/file/d/1jMzz0CMVRW2_H0cHgzzSh2QR2VyUjhJj/view?usp=drive_link)
-![Основной экран со слайдом delete](https://drive.google.com/file/d/1HygeKKVYDhcU8RM4VY3wLxf0Qd5XrT-A/view?usp=drive_link)
-![Основной экран с мал. аппбаром](https://drive.google.com/file/d/1742oH0Zn_69ssgbqkEQMcE8DJJQ96mqL/view?usp=drive_link)
-![Экран редактирования + информации](https://drive.google.com/file/d/1udl4rkpUNGTtYmA-2tDwd7fffRCLY9Aw/view?usp=drive_link)
+![Основной экран со слайдом Done](https://github.com/Mavericketoff/to_do_application/assets/47009823/43aeca75-c64d-4396-934e-2cdb0a94134b)
+![Основной экран со слайдом delete](https://github.com/Mavericketoff/to_do_application/assets/47009823/65f2f7e1-7ea6-436f-afe2-f98b9f936182)
+![Основной экран с мал. аппбаром](https://github.com/Mavericketoff/to_do_application/assets/47009823/8e7228de-e0ce-4907-8e40-c241a61616ca)
+![Экран редактирования + информации](https://github.com/Mavericketoff/to_do_application/assets/47009823/2b46838f-004e-42c6-b6c5-d3f2c569c096)
 
 ## В случае возникновения вопросов
 
