@@ -38,7 +38,7 @@
 
 ## Релизная сборка
 
-Есть собранный apk, именно релизная сборка. Найти готовый apk для установки можно по пути `/Users/mavericketoff/Documents/GitHub/to_do_application/build/app/outputs/flutter-apk/app-release.apk`. Или скачать по ссылке - [`тык`](https://drive.google.com/file/d/11cbF6if4kgXhypLeux4g3RCLzayoY0KI/view?usp=sharing)
+Есть собранный apk, именно релизная сборка. Найти готовый apk для установки можно по пути `build/app/outputs/flutter-apk/app-release.apk`. Или скачать по ссылке - [`тык`](https://drive.google.com/file/d/11cbF6if4kgXhypLeux4g3RCLzayoY0KI/view?usp=sharing)
 
 ## Скриншоты
 <img src="https://github.com/Mavericketoff/to_do_application/assets/47009823/43aeca75-c64d-4396-934e-2cdb0a94134b.png" width="400" height="700">
