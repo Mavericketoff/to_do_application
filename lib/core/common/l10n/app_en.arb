@@ -1,0 +1,13 @@
+{
+  "appTitle": "Todo List",
+  "tasksCompletedCount": "Completed - {tasksCompletedCount}",
+  "addNewTaskText": "New",
+  "delete": "Delete",
+  "save": "Save",
+  "addNewTaskHintText": "What you need to do...",
+  "significance": "Significance",
+  "significanceNo": "No",
+  "significanceLowPriority": "Low",
+  "significanceHighPriority": "!! High",
+  "deadlineTitle": "Do untill"
+}
