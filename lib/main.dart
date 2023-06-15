@@ -1,9 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:to_do_application/error_handler.dart';
-import 'package:to_do_application/logger.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:to_do_application/core/common/error_handler.dart';
+import 'package:to_do_application/core/common/logger.dart';
+import 'package:to_do_application/core/theme/application_style.dart';
+import 'package:to_do_application/core/theme/bloc/theme_bloc.dart';
+import 'package:to_do_application/core/theme/colors/dark_colors.dart';
+import 'package:to_do_application/core/theme/colors/light_colors.dart';
+import 'package:to_do_application/features/home/presentation/home_screen.dart';
+import 'package:to_do_application/features/tasks/block/tasks_bloc.dart';
+import 'package:to_do_application/features/tasks_detail/presentation/tasks_detail_screen.dart';
 
 void main() {
   runZonedGuarded(() {
@@ -11,68 +19,43 @@ void main() {
     logger.info('Start main');
 
     ErrorHandler.init();
-    runApp(const MyApp());
-  }, ErrorHandler.recordError);
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
+    runApp(
+      const MainApp(),
     );
-  }
+  }, ErrorHandler.recordError);
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeBloc>(
+          create: (context) => ThemeBloc(
+            isDark: Theme.of(context).brightness == Brightness.dark,
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        BlocProvider<TasksBloc>(
+          create: (context) => TasksBloc(),
+        ),
+      ],
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          final currentPalette = state.isDarkTheme ? darkColors : lightColors;
+          return MaterialApp(
+            theme: AppStyle(currentPalette).themeData,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+            initialRoute: '/',
+            routes: <String, WidgetBuilder>{
+              '/': (context) => const HomeScreen(),
+              '/task_details': (context) => const TaskDetailsScreen()
+            },
+          );
+        },
       ),
     );
   }
