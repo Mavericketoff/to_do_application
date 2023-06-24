@@ -6,11 +6,18 @@
 
 **State management:** [`bloc`](https://pub.dev/packages/bloc)
 
-**Dependency injection:** none
+**Internationalization:** [`intl`](https://pub.dev/packages/intl)
+
+**HTTP:** [`dio`](https://pub.dev/packages/dio)
 
 **DataBase:** none
 
 **Network:** none
+
+**Logs:** [`logging`](https://pub.dev/packages/logging)
+
+**LocalStorage:** [`shared_preferences`](https://pub.dev/packages/shared_preferences) + [`sqflite`](https://pub.dev/packages/sqflite)
+
 
 По ходу выполнения проекта все будет изменяться)
 
@@ -34,11 +41,25 @@
 
 ### Преднастройка
 
+## Краткое перечисление фичей
+ - Локализация
+ - Error Handler
+ - Логгирование
+ - Просмотр списка задач
+ - Скрытие выполненых задач
+ - Быстрое добавление задач
+ - Степень важности задач
+ - Дедлайны
+ - Добавление, редактирование, удаление
+ - Сохранение задач на сервере
+ - Сохранение задач локально на устройстве
+ - Синхронизация локальных данных и сервера
+
 Из преднастройки проекта был добавен анализатор и форматер. Также настроена релизная сборка под Android.
 
 ## Релизная сборка
 
-Есть собранный apk, именно релизная сборка. Найти готовый apk для установки можно по пути `build/app/outputs/flutter-apk/app-release.apk`. Или скачать по ссылке - [`тык`](https://drive.google.com/file/d/11cbF6if4kgXhypLeux4g3RCLzayoY0KI/view?usp=sharing) Или можно найти ее в релизах гита)
+Есть собранный apk, именно релизная сборка. Найти готовый apk для установки можно по пути `build/app/outputs/flutter-apk/app-release.apk`. Или можно найти ее в релизах гита)
 
 ## Скриншоты
 <img src="https://github.com/Mavericketoff/to_do_application/assets/47009823/43aeca75-c64d-4396-934e-2cdb0a94134b.png" width="400" height="700">
