@@ -20,12 +20,18 @@ dependencies:
   uuid: ^3.0.7
   json_annotation: ^4.8.1
   flutter_svg: ^2.0.5
+  path_provider: ^2.0.15
+  sqflite: ^2.2.8+4
+  dio: ^5.2.1+1
+  http: ^0.13.6
+  shared_preferences: ^2.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   build_runner: ^2.3.3
+  json_serializable: ^6.6.2
 
 flutter:
   generate: true
