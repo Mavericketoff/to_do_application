@@ -7,8 +7,7 @@ class PersistenceUtil {
 
   Future<int?> getTasksRevision() async {
     final instance = await SharedPreferences.getInstance();
-    final data = instance.getInt(_tasksRevisionKey);
-    return data;
+    return instance.getInt(_tasksRevisionKey);
   }
 
   Future<void> saveTasksRevision({required int revision}) async {
@@ -16,19 +15,20 @@ class PersistenceUtil {
     await instance.setInt(_tasksRevisionKey, revision);
   }
 
-  Future<String?> getDeviceId() async {
+  Future<String> getDeviceId() async {
     final instance = await SharedPreferences.getInstance();
-    var data = instance.getString(_deviceIdKey);
-    if (data == null) {
-      await generateAndSaveDeviceId();
-      data = instance.getString(_deviceIdKey);
+    var deviceId = instance.getString(_deviceIdKey);
+    if (deviceId == null || deviceId.isEmpty) {
+      deviceId = generateAndSaveDeviceId();
     }
-    return data;
+    return deviceId;
   }
 
-  Future<void> generateAndSaveDeviceId() async {
+  String generateAndSaveDeviceId() {
     final deviceId = const Uuid().v4();
-    final instance = await SharedPreferences.getInstance();
-    await instance.setString(_deviceIdKey, deviceId);
+    SharedPreferences.getInstance().then((instance) {
+      instance.setString(_deviceIdKey, deviceId);
+    });
+    return deviceId;
   }
 }

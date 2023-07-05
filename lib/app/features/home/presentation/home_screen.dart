@@ -4,12 +4,12 @@ import 'package:to_do_application/app/features/home/presentation/widgets/home_bu
 import 'package:to_do_application/app/features/home/presentation/widgets/task_list.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
+    return Scaffold(
+      body: const SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverPersistentHeader(
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: HomeButton(),
+      floatingActionButton: HomeButton(context: context),
     );
   }
 }

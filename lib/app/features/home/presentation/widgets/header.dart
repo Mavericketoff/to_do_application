@@ -17,16 +17,29 @@ class HomeScreenHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
       true;
 
-  double get expandedHeight => 200;
+  static const double expandedHeight = 200;
+
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final themeData = Theme.of(context);
     final text = themeData.textTheme;
-    final diff = expandedHeight - kToolbarHeight;
+    const diff = expandedHeight - kToolbarHeight;
     final k = (diff - shrinkOffset) / diff;
-    final double percentOfShrinkOffset = k > 0 ? k : 0;
-    final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
+    final double percentOfShrinkOffset = k
+        .clamp(0, 1)
+        .toDouble(); // Применение clamp() и преобразование в double
+    final colors = context
+        .read<ThemeBloc>()
+        .state
+        .colorPalette; // Использование context.read для доступа к ThemeBloc
+    final tasksBloc = context.read<
+        TasksBloc>(); // Использование context.read для доступа к TasksBloc
+    final completedTasksCount =
+        tasksBloc.state.tasks.where((element) => element.isDone).length;
 
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
@@ -54,7 +67,7 @@ class HomeScreenHeader extends SliverPersistentHeaderDelegate {
                       children: [
                         Text(
                           AppLocalizations.of(context).appTitle,
-                          style: text.titleLarge?.copyWith(
+                          style: text.titleLarge!.copyWith(
                             fontSize: 20 + 12 * percentOfShrinkOffset,
                           ),
                         ),
@@ -62,23 +75,13 @@ class HomeScreenHeader extends SliverPersistentHeaderDelegate {
                           Padding(
                             padding:
                                 EdgeInsets.only(top: 6 * percentOfShrinkOffset),
-                            child: BlocBuilder<TasksBloc, TasksState>(
-                              builder: (context, state) {
-                                return Text(
-                                  AppLocalizations.of(context)
-                                      .tasksCompletedCount(
-                                    BlocProvider.of<TasksBloc>(context)
-                                        .state
-                                        .tasks
-                                        .where((element) => element.isDone)
-                                        .length,
-                                  ),
-                                  style: text.bodyMedium?.copyWith(
-                                    color: themeData.hintColor,
-                                    fontSize: 16 * percentOfShrinkOffset,
-                                  ),
-                                );
-                              },
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .tasksCompletedCount(completedTasksCount),
+                              style: text.bodySmall!.copyWith(
+                                color: themeData.hintColor,
+                                fontSize: 16 * percentOfShrinkOffset,
+                              ),
                             ),
                           ),
                       ],
@@ -90,23 +93,20 @@ class HomeScreenHeader extends SliverPersistentHeaderDelegate {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: Icon(
-                          BlocProvider.of<TasksBloc>(context)
-                                  .state
-                                  .completedVisible
+                          state.completedVisible
                               ? Icons.visibility_off
                               : Icons.visibility,
                           size: 24,
                           color: colors.colorBlue,
                         ),
                         onPressed: () {
-                          context
-                              .read<TasksBloc>()
+                          tasksBloc
                               .add(const ToggleVisibilityCompletedFilter());
                         },
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

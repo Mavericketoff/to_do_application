@@ -7,7 +7,25 @@ import 'package:to_do_application/app/features/states/block_tasks/tasks_bloc.dar
 import 'package:to_do_application/app/features/tasks/data/task_model.dart';
 
 class HomeButton extends StatelessWidget {
-  const HomeButton({super.key});
+  final BuildContext context;
+
+  const HomeButton({required this.context, Key? key}) : super(key: key);
+
+  Widget _buildFloatingActionButton({
+    required Color backgroundColor,
+    required IconData iconData,
+    required VoidCallback onPressed,
+  }) {
+    final colors = context.read<ThemeBloc>().state.colorPalette;
+    return FloatingActionButton(
+      onPressed: onPressed,
+      backgroundColor: backgroundColor,
+      child: Icon(
+        iconData,
+        color: colors.colorWhite,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +33,17 @@ class HomeButton extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(width: 32),
-        FloatingActionButton(
+        _buildFloatingActionButton(
+          backgroundColor: colors.colorBlue,
+          iconData: Icons.refresh,
           onPressed: () {
             context.read<TasksBloc>().add(const LoadTasks());
           },
-          backgroundColor: colors.colorBlue,
-          child: Icon(color: colors.colorWhite, Icons.refresh),
         ),
         const Spacer(),
-        FloatingActionButton(
+        _buildFloatingActionButton(
           backgroundColor: colors.colorBlue,
-          child: Icon(color: colors.colorWhite, Icons.add),
+          iconData: Icons.add,
           onPressed: () {
             Navigator.pushNamed(
               context,
