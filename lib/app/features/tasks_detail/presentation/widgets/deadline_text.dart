@@ -17,7 +17,7 @@ class TaskDetailsDeadlineText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(AppLocalizations.of(context).deadlineTitle),
+        Text(AppLocalizations.of(context)!.deadlineTitle),
         if (date != null)
           Text(
             DateFormat('d MMMM yyyy', 'ru').format(date),

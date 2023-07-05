@@ -28,7 +28,7 @@ class TaskDetailsDeleteButton extends StatelessWidget {
               Navigator.pop(context);
             },
       icon: const Icon(Icons.delete),
-      label: Text(AppLocalizations.of(context).delete),
+      label: Text(AppLocalizations.of(context)!.delete),
     );
   }
 }

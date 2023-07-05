@@ -5,8 +5,15 @@ import 'package:to_do_application/app/features/states/block_tasks/tasks_bloc.dar
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/appbar.dart';
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/body.dart';
 
+import '../../../core/common/logger.dart';
+import '../../tasks/data/task_model.dart';
+
 class TaskDetailsScreen extends StatefulWidget {
-  const TaskDetailsScreen({super.key});
+  const TaskDetailsScreen(
+      {required this.taskId, required this.isNewTask, super.key});
+
+  final String taskId;
+  final bool isNewTask;
 
   @override
   State<TaskDetailsScreen> createState() => _TaskDetailsScreenState();
@@ -14,7 +21,6 @@ class TaskDetailsScreen extends StatefulWidget {
 
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final TextEditingController controller = TextEditingController();
-  late Map<String, dynamic> navigatorArguments;
 
   @override
   void initState() {
@@ -29,7 +35,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   void saveTask(BuildContext context) {
     final taskDetailBloc = context.read<TaskDetailsBloc>();
-    if (navigatorArguments['isNew']) {
+    if (widget.isNewTask) {
       context.read<TasksBloc>().add(AddTask(
           task: taskDetailBloc.state.currentTask
               .copyWith(text: controller.text)));
@@ -42,11 +48,20 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    navigatorArguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    if (widget.isNewTask) {
+      logger.info('Open task details page to create new task');
+    } else {
+      logger.info('Open task details page to edit task');
+    }
+
+    final task = context.read<TasksBloc>().state.tasks.firstWhere(
+        (task) => task.id == widget.taskId,
+        orElse: () => Task(
+            text: '', createdAt: DateTime.now(), changedAt: DateTime.now()));
+
     return BlocProvider(
       create: (context) =>
-          TaskDetailsBloc(currentTask: navigatorArguments['task']),
+          TaskDetailsBloc(currentTask: task, isNewTask: widget.isNewTask),
       child: BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
         builder: (context, state) {
           return Scaffold(

@@ -4,23 +4,31 @@ import 'package:to_do_application/app/features/home/presentation/widgets/home_bu
 import 'package:to_do_application/app/features/home/presentation/widgets/task_list.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({
+    required this.onTaskTap,
+    required this.onNewTaskButtonTap,
+    Key? key,
+  }) : super(key: key);
+
+  final void Function(String taskId) onTaskTap;
+  final void Function() onNewTaskButtonTap;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverPersistentHeader(
+            const SliverPersistentHeader(
               delegate: HomeScreenHeader(),
               pinned: true,
             ),
-            HomeScreenTaskList(),
+            HomeScreenTaskList(onTaskTap: onTaskTap),
           ],
         ),
       ),
-      floatingActionButton: HomeButton(context: context),
+      floatingActionButton:
+          HomeButton(context: context, onNewTaskButtonTap: onNewTaskButtonTap),
     );
   }
 }

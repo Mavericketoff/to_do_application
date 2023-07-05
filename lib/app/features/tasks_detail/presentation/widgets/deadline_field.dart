@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_application/app/features/states/bloc_tasks_detail/tasks_detail_bloc.dart';
+import 'package:to_do_application/app/features/tasks/data/task_model.dart';
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/deadline_text.dart';
 
 class TaskDetailsDeadlineField extends StatefulWidget {
-  const TaskDetailsDeadlineField({super.key});
+  const TaskDetailsDeadlineField({super.key, required Task task});
 
   @override
   State<TaskDetailsDeadlineField> createState() =>

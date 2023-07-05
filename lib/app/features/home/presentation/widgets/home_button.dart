@@ -1,30 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do_application/app/core/common/logger.dart';
 import 'package:to_do_application/app/core/theme/bloc/theme_bloc.dart';
-import 'package:to_do_application/app/core/utils/routes_util.dart';
 import 'package:to_do_application/app/features/states/block_tasks/tasks_bloc.dart';
-import 'package:to_do_application/app/features/tasks/data/task_model.dart';
 
 class HomeButton extends StatelessWidget {
   final BuildContext context;
 
-  const HomeButton({required this.context, Key? key}) : super(key: key);
+  const HomeButton(
+      {required this.onNewTaskButtonTap, super.key, required this.context});
 
+  final void Function() onNewTaskButtonTap;
   Widget _buildFloatingActionButton({
     required Color backgroundColor,
     required IconData iconData,
     required VoidCallback onPressed,
+    required String id,
   }) {
     final colors = context.read<ThemeBloc>().state.colorPalette;
-    return FloatingActionButton(
-      onPressed: onPressed,
-      backgroundColor: backgroundColor,
-      child: Icon(
-        iconData,
-        color: colors.colorWhite,
-      ),
-    );
+    if (id == 'Refresh') {
+      return FloatingActionButton(
+        heroTag: 'RefreshButton',
+        onPressed: onPressed,
+        backgroundColor: backgroundColor,
+        child: Icon(
+          iconData,
+          color: colors.colorWhite,
+        ),
+      );
+    } else {
+      return FloatingActionButton(
+        heroTag: 'AddButton',
+        onPressed: onPressed,
+        backgroundColor: backgroundColor,
+        child: Icon(
+          iconData,
+          color: colors.colorWhite,
+        ),
+      );
+    }
   }
 
   @override
@@ -34,6 +47,7 @@ class HomeButton extends StatelessWidget {
       children: [
         const SizedBox(width: 32),
         _buildFloatingActionButton(
+          id: 'Refresh',
           backgroundColor: colors.colorBlue,
           iconData: Icons.refresh,
           onPressed: () {
@@ -42,23 +56,10 @@ class HomeButton extends StatelessWidget {
         ),
         const Spacer(),
         _buildFloatingActionButton(
+          id: 'add',
           backgroundColor: colors.colorBlue,
           iconData: Icons.add,
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              RoutesUtil.taskDetailRoute,
-              arguments: {
-                'task': Task(
-                  text: '',
-                  createdAt: DateTime.now(),
-                  changedAt: DateTime.now(),
-                ),
-                'isNew': true
-              },
-            );
-            logger.info('Open task details page to create new task');
-          },
+          onPressed: onNewTaskButtonTap,
         ),
       ],
     );

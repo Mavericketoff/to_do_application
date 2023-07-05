@@ -66,7 +66,7 @@ class HomeScreenHeader extends SliverPersistentHeaderDelegate {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          AppLocalizations.of(context).appTitle,
+                          AppLocalizations.of(context)!.appTitle,
                           style: text.titleLarge!.copyWith(
                             fontSize: 20 + 12 * percentOfShrinkOffset,
                           ),
@@ -76,7 +76,7 @@ class HomeScreenHeader extends SliverPersistentHeaderDelegate {
                             padding:
                                 EdgeInsets.only(top: 6 * percentOfShrinkOffset),
                             child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .tasksCompletedCount(completedTasksCount),
                               style: text.bodySmall!.copyWith(
                                 color: themeData.hintColor,

@@ -35,7 +35,7 @@ class TaskDetailsSignificanceField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context).significance,
+            AppLocalizations.of(context)!.significance,
             style: text.bodyMedium,
           ),
           SignificanceText(significance: selectedSignificance)

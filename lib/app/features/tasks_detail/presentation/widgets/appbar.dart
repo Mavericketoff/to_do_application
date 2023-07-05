@@ -43,7 +43,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
                 padding: const EdgeInsets.symmetric(horizontal: 8),
               ),
               child: Text(
-                AppLocalizations.of(context).save.toUpperCase(),
+                AppLocalizations.of(context)!.save.toUpperCase(),
                 style: text.labelMedium!.copyWith(
                   color: colors.colorBlue,
                 ),
