@@ -15,10 +15,12 @@ class HomeButton extends StatelessWidget {
     required IconData iconData,
     required VoidCallback onPressed,
     required String id,
+    required ValueKey<String> key,
   }) {
     final colors = context.read<ThemeBloc>().state.colorPalette;
     if (id == 'Refresh') {
       return FloatingActionButton(
+        key: const ValueKey('ref'),
         heroTag: 'RefreshButton',
         onPressed: onPressed,
         backgroundColor: backgroundColor,
@@ -29,6 +31,7 @@ class HomeButton extends StatelessWidget {
       );
     } else {
       return FloatingActionButton(
+        key: const ValueKey('add'),
         heroTag: 'AddButton',
         onPressed: onPressed,
         backgroundColor: backgroundColor,
@@ -47,6 +50,7 @@ class HomeButton extends StatelessWidget {
       children: [
         const SizedBox(width: 32),
         _buildFloatingActionButton(
+          key: const ValueKey('ref'),
           id: 'Refresh',
           backgroundColor: colors.colorBlue,
           iconData: Icons.refresh,
@@ -56,6 +60,7 @@ class HomeButton extends StatelessWidget {
         ),
         const Spacer(),
         _buildFloatingActionButton(
+          key: const ValueKey('add'),
           id: 'add',
           backgroundColor: colors.colorBlue,
           iconData: Icons.add,
