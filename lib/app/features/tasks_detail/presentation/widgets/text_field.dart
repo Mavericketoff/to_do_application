@@ -34,7 +34,7 @@ class TaskDetailsTextField extends StatelessWidget {
         maxLines: null,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: AppLocalizations.of(context).addNewTaskHintText,
+          hintText: AppLocalizations.of(context)!.addNewTaskHintText,
           hintStyle: text.bodyMedium?.copyWith(
             color: colors.colorLabelTertiary,
           ),

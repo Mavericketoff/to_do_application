@@ -10,10 +10,10 @@ part 'tasks_event.dart';
 part 'tasks_state.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc(
-      {required Repository repository,
-      required PersistenceUtil persistenceUtil})
-      : _repository = repository,
+  TasksBloc({
+    required Repository repository,
+    required PersistenceUtil persistenceUtil,
+  })  : _repository = repository,
         _persistenceUtil = persistenceUtil,
         super(const TasksState()) {
     on<LoadTasks>(_onLoadTasks);

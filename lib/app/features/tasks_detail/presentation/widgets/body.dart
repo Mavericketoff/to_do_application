@@ -7,52 +7,35 @@ import 'package:to_do_application/app/features/tasks_detail/presentation/widgets
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/significance_field.dart';
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/text_field.dart';
 
-class TaskDetailsScreenBody extends StatefulWidget {
-  const TaskDetailsScreenBody({required this.controller, super.key});
+class TaskDetailsScreenBody extends StatelessWidget {
+  const TaskDetailsScreenBody({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
   final TextEditingController controller;
 
-  @override
-  State<TaskDetailsScreenBody> createState() => _TaskDetailsScreenBodyState();
-}
-
-class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
-  late Bloc<TaskDetailsEvent, TaskDetailsState> taskBloc;
-
-  @override
-  void initState() {
-    taskBloc = context.read<TaskDetailsBloc>();
-    widget.controller.value =
-        TextEditingValue(text: taskBloc.state.currentTask.text);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void updateSignificance(Significance significance) {
+  void updateSignificance(BuildContext context, Significance significance) {
+    final taskBloc = context.read<TaskDetailsBloc>();
     taskBloc.add(TaskDetailsUpdateSignificance(significance: significance));
   }
 
   @override
   Widget build(BuildContext context) {
-    final arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final isNew = arguments['isNew'];
     return BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
       builder: (context, state) {
         return ListView(
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TaskDetailsTextField(controller: widget.controller),
+              child: TaskDetailsTextField(controller: controller),
             ),
             Container(
               padding: const EdgeInsets.all(16),
               child: TaskDetailsSignificanceField(
                 selectedSignificance: state.currentTask.significance,
-                onSignificanceValueChanged: updateSignificance,
+                onSignificanceValueChanged: (significance) =>
+                    updateSignificance(context, significance),
               ),
             ),
             const Divider(
@@ -61,13 +44,17 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-              child: const TaskDetailsDeadlineField(),
+              child: TaskDetailsDeadlineField(
+                task: state.currentTask,
+              ),
             ),
             const Divider(),
             Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TaskDetailsDeleteButton(isNew: isNew),
+              child: TaskDetailsDeleteButton(
+                isNew: state.isNewTask,
+              ),
             ),
           ],
         );

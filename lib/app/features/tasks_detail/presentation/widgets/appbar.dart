@@ -35,6 +35,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
           padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
           child: SizedBox(
             child: TextButton(
+              key: const ValueKey('saveBtn'),
               onPressed: () {
                 saveTask(context);
                 Navigator.pop(context);
@@ -43,7 +44,7 @@ class TaskDetailsScreenAppBar extends StatelessWidget
                 padding: const EdgeInsets.symmetric(horizontal: 8),
               ),
               child: Text(
-                AppLocalizations.of(context).save.toUpperCase(),
+                AppLocalizations.of(context)!.save.toUpperCase(),
                 style: text.labelMedium!.copyWith(
                   color: colors.colorBlue,
                 ),

@@ -38,7 +38,7 @@ class _NewTaskFieldState extends State<NewTaskField> {
     return TextField(
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: AppLocalizations.of(context).addNewTaskText,
+        hintText: AppLocalizations.of(context)!.addNewTaskText,
         hintStyle: text.bodyMedium?.copyWith(color: colors.colorLabelTertiary),
       ),
       style: text.bodyMedium,

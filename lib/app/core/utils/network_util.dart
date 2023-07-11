@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -13,17 +12,19 @@ class NetworkUtil {
 
   final PersistenceUtil _persistenceUtil;
 
-  NetworkUtil({required persistenceUtil}) : _persistenceUtil = persistenceUtil;
+  NetworkUtil({required PersistenceUtil persistenceUtil})
+      : _persistenceUtil = persistenceUtil;
 
   Dio get dioInstance {
     _dio ??= Dio(BaseOptions(
-        baseUrl: url,
-        connectTimeout: const Duration(seconds: timeoutTime),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer uncontrastable'
-        }))
+      baseUrl: url,
+      connectTimeout: const Duration(seconds: timeoutTime),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer uncontrastable'
+      },
+    ))
       ..interceptors.add(
         InterceptorsWrapper(
           onRequest: (options, handler) async {
@@ -36,48 +37,36 @@ class NetworkUtil {
     return _dio!;
   }
 
-  Future<Response> get(String path) async {
-    return _request(() => dioInstance.get(path));
+  Future<Response<dynamic>> get(String path) async {
+    return await _request(() => dioInstance.get(path));
   }
 
-  Future<Response> post(String path, Map<String, dynamic> data) async {
-    return _request(() => dioInstance.post(path, data: data));
+  Future<Response<dynamic>> post(String path, Map<String, dynamic> data) async {
+    return await _request(() => dioInstance.post(path, data: data));
   }
 
-  Future<Response> delete(String path) async {
-    return _request(() => dioInstance.delete(path));
+  Future<Response<dynamic>> delete(String path) async {
+    return await _request(() => dioInstance.delete(path));
   }
 
-  Future<Response> put(String path, Map<String, dynamic> data) async {
-    return _request<Response>(() => dioInstance.put(path, data: data));
+  Future<Response<dynamic>> put(String path, Map<String, dynamic> data) async {
+    return await _request(() => dioInstance.put(path, data: data));
   }
 
-  Future<Response> patch(String path, Map<String, dynamic> data) async {
-    return _request<Response>(() => dioInstance.patch(path, data: data));
+  Future<Response<dynamic>> patch(
+      String path, Map<String, dynamic> data) async {
+    return await _request(() => dioInstance.patch(path, data: data));
   }
 
   Future<T> _request<T>(Future<T> Function() requestFunc) async {
     try {
       return await requestFunc();
-    } on DioException catch (dioException) {
-      switch (dioException.type) {
-        case DioExceptionType.connectionTimeout:
-        case DioExceptionType.receiveTimeout:
-        case DioExceptionType.sendTimeout:
-        case DioExceptionType.cancel:
-        case DioExceptionType.connectionError:
-          throw NoInternetCustomException();
-        case DioExceptionType.badResponse:
-          throw ResponseCustomException('Bad response');
-        default:
-          if (dioException.error is SocketException) {
-            throw NoInternetCustomException();
-          } else {
-            throw UnknownNetworkCustomException();
-          }
+    } on DioException catch (dioError) {
+      if (dioError.error is SocketException) {
+        throw NoInternetCustomException();
+      } else {
+        throw UnknownNetworkCustomException();
       }
-    } on SocketException catch (_) {
-      throw NoInternetCustomException();
     } on Object catch (_) {
       throw UnknownNetworkCustomException();
     }

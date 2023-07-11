@@ -7,8 +7,10 @@ import 'package:to_do_application/app/features/tasks/presentation/widgets/tasks_
 import 'package:to_do_application/app/features/tasks/presentation/widgets/tasks_card_text.dart';
 
 class TaskCardView extends StatelessWidget {
-  const TaskCardView({required this.task, super.key});
+  const TaskCardView({required this.task, super.key, required this.onTap});
   final Task task;
+
+  final void Function(String taskId) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class TaskCardView extends StatelessWidget {
           Expanded(child: TasksCardText(task: task)),
           Padding(
             padding: const EdgeInsets.only(left: 14.0),
-            child: TasksCardInfoButton(task: task),
+            child: TasksCardInfoButton(task: task, onTap: onTap),
           ),
         ],
       ),
