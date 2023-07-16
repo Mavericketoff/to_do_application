@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_application/app/features/home/presentation/widgets/header.dart';
+import 'package:to_do_application/app/features/home/presentation/widgets/header/header.dart';
 import 'package:to_do_application/app/features/home/presentation/widgets/home_button.dart';
 import 'package:to_do_application/app/features/home/presentation/widgets/task_list.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    required this.onTaskTap,
+    required this.onNewTaskButtonTap,
+    Key? key,
+  }) : super(key: key);
+
+  final void Function(String taskId) onTaskTap;
+  final void Function() onNewTaskButtonTap;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverPersistentHeader(
+            const SliverPersistentHeader(
               delegate: HomeScreenHeader(),
               pinned: true,
             ),
-            HomeScreenTaskList(),
+            HomeScreenTaskList(onTaskTap: onTaskTap),
           ],
         ),
       ),
-      floatingActionButton: HomeButton(),
+      floatingActionButton:
+          HomeButton(context: context, onNewTaskButtonTap: onNewTaskButtonTap),
     );
   }
 }

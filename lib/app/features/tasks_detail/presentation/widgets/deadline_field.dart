@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_application/app/features/states/bloc_tasks_detail/tasks_detail_bloc.dart';
+import 'package:to_do_application/app/features/tasks/data/task_model.dart';
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/deadline_text.dart';
 
 class TaskDetailsDeadlineField extends StatefulWidget {
-  const TaskDetailsDeadlineField({super.key});
+  const TaskDetailsDeadlineField({Key? key, required this.task})
+      : super(key: key);
+
+  final Task task;
 
   @override
   State<TaskDetailsDeadlineField> createState() =>
@@ -12,27 +16,31 @@ class TaskDetailsDeadlineField extends StatefulWidget {
 }
 
 class _TaskDetailsDeadlineFieldState extends State<TaskDetailsDeadlineField> {
-  bool switchValue = false;
+  late bool switchValue;
 
-  Future<void> pickDate(BuildContext context, DateTime? deadline) async {
-    await showDatePicker(
+  Future<void> pickDate() async {
+    final selectedDate = await showDatePicker(
       context: context,
-      initialDate: deadline ?? DateTime.now(),
+      initialDate: widget.task.deadline ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
-    ).then((date) {
-      if (date != null) {
-        context
-            .read<TaskDetailsBloc>()
-            .add(TaskDetailsUpdateDeadline(deadline: date));
-        setState(() {
-          switchValue = true;
-        });
-      }
-    });
+    );
+
+    if (selectedDate != null) {
+      updateDeadline(selectedDate);
+      setState(() {
+        switchValue = true;
+      });
+    }
   }
 
-  void clearDate(BuildContext context) {
+  void updateDeadline(DateTime newDeadline) {
+    context
+        .read<TaskDetailsBloc>()
+        .add(TaskDetailsUpdateDeadline(deadline: newDeadline));
+  }
+
+  void clearDate() {
     context.read<TaskDetailsBloc>().add(const TaskDetailsDeleteDeadline());
     setState(() {
       switchValue = false;
@@ -40,14 +48,19 @@ class _TaskDetailsDeadlineFieldState extends State<TaskDetailsDeadlineField> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    switchValue = widget.task.deadline != null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskDetailsBloc, TaskDetailsState>(
       builder: (context, state) {
-        switchValue = state.currentTask.deadline != null;
         return Row(
           children: [
             GestureDetector(
-              onTap: () => pickDate(context, state.currentTask.deadline),
+              onTap: pickDate,
               child: const SizedBox(
                 height: 40,
                 child: TaskDetailsDeadlineText(),
@@ -58,12 +71,12 @@ class _TaskDetailsDeadlineFieldState extends State<TaskDetailsDeadlineField> {
               value: switchValue,
               onChanged: (value) {
                 if (value) {
-                  pickDate(context, state.currentTask.deadline);
+                  pickDate();
                 } else {
-                  clearDate(context);
+                  clearDate();
                 }
               },
-            )
+            ),
           ],
         );
       },
