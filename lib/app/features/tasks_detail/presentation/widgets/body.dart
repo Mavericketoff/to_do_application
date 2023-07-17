@@ -7,7 +7,7 @@ import 'package:to_do_application/app/features/tasks_detail/presentation/widgets
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/significance_field.dart';
 import 'package:to_do_application/app/features/tasks_detail/presentation/widgets/text_field.dart';
 
-class TaskDetailsScreenBody extends StatelessWidget {
+class TaskDetailsScreenBody extends StatefulWidget {
   const TaskDetailsScreenBody({
     Key? key,
     required this.controller,
@@ -15,8 +15,27 @@ class TaskDetailsScreenBody extends StatelessWidget {
 
   final TextEditingController controller;
 
-  void updateSignificance(BuildContext context, Significance significance) {
-    final taskBloc = context.read<TaskDetailsBloc>();
+  @override
+  State<TaskDetailsScreenBody> createState() => _TaskDetailsScreenBodyState();
+}
+
+class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
+  late Bloc<TaskDetailsEvent, TaskDetailsState> taskBloc;
+
+  @override
+  void initState() {
+    taskBloc = context.read<TaskDetailsBloc>();
+    widget.controller.value =
+        TextEditingValue(text: taskBloc.state.currentTask.text);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void updateSignificanse(Significance significance) {
     taskBloc.add(TaskDetailsUpdateSignificance(significance: significance));
   }
 
@@ -28,14 +47,14 @@ class TaskDetailsScreenBody extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TaskDetailsTextField(controller: controller),
+              child: TaskDetailsTextField(controller: widget.controller),
             ),
             Container(
               padding: const EdgeInsets.all(16),
               child: TaskDetailsSignificanceField(
                 selectedSignificance: state.currentTask.significance,
                 onSignificanceValueChanged: (significance) =>
-                    updateSignificance(context, significance),
+                    updateSignificanse(significance),
               ),
             ),
             const Divider(

@@ -27,7 +27,6 @@ class TaskCardView extends StatelessWidget {
                 context
                     .read<TasksBloc>()
                     .add(UpdateTask(task: task.copyWith(isDone: !task.isDone)));
-                //logger.info('${task.isDone ? 'Undone' : 'Done'} task');
               },
             ),
           ),
