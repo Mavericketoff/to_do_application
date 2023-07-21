@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "430342625269",
+    "project_id": "taskapp-a12a4",
+    "storage_bucket": "taskapp-a12a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430342625269:android:2ac0701321d9fd2c6272bc",
+        "android_client_info": {
+          "package_name": "com.example.to_do_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430342625269-43p70li4r6nu8dn09jbt3c44e4ud4cbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqjCHT-EWqaPGhcTPPF7MHPweK7Abd9J4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430342625269-43p70li4r6nu8dn09jbt3c44e4ud4cbf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "430342625269-t8tup5qhgeajtbgrfakij1q04lkocco9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.toDoApplication"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430342625269:android:eabf07d71f6550a26272bc",
+        "android_client_info": {
+          "package_name": "com.example.to_do_application.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430342625269-43p70li4r6nu8dn09jbt3c44e4ud4cbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqjCHT-EWqaPGhcTPPF7MHPweK7Abd9J4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430342625269-43p70li4r6nu8dn09jbt3c44e4ud4cbf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "430342625269-t8tup5qhgeajtbgrfakij1q04lkocco9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.toDoApplication"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,26 +5,31 @@ import 'package:to_do_application/app/features/states/block_tasks/tasks_bloc.dar
 import 'package:to_do_application/app/features/tasks/data/task_model.dart';
 import 'package:to_do_application/app/features/tasks/presentation/widgets/tasks_card_view.dart';
 
-class TaskCard extends StatelessWidget {
-  const TaskCard({required this.task, super.key, required this.onTap});
-  final Task task;
+class TaskCard extends StatefulWidget {
+  const TaskCard({required this.task, Key? key, required this.onTap})
+      : super(key: key);
 
+  final Task task;
   final void Function(String taskId) onTap;
 
+  @override
+  State<TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     final colors = BlocProvider.of<ThemeBloc>(context).state.colorPalette;
     return Dismissible(
-      key: ValueKey(task.id),
+      key: ValueKey(widget.task.id),
       confirmDismiss: (direction) async {
         switch (direction) {
           case DismissDirection.endToStart:
-            context.read<TasksBloc>().add(DeleteTask(task: task));
+            context.read<TasksBloc>().add(DeleteTask(task: widget.task));
             return true;
           case DismissDirection.startToEnd:
-            context
-                .read<TasksBloc>()
-                .add(UpdateTask(task: task.copyWith(isDone: !task.isDone)));
+            context.read<TasksBloc>().add(UpdateTask(
+                task: widget.task.copyWith(isDone: !widget.task.isDone)));
             return false;
           default:
             return false;
@@ -53,7 +58,10 @@ class TaskCard extends StatelessWidget {
           ],
         ),
       ),
-      child: TaskCardView(task: task, onTap: onTap),
+      child: TaskCardView(
+        task: widget.task,
+        onTap: widget.onTap,
+      ),
     );
   }
 }
